@@ -1,12 +1,13 @@
-/**
- * Sequelize bağlantı konfigürasyonu.
- * dotenv.config() burada ÇAĞRILMIYOR — app.ts'de en üstte çağrılıyor.
- * İki kez çağırmak zararsız ama gereksiz, tek yerden yönetmek daha temiz.
- */
 import { Sequelize } from 'sequelize';
 
 const sequelize = new Sequelize({
   dialect: 'postgres',
+  dialectOptions: process.env.DB_HOST?.includes('neon.tech') ? {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false
+    }
+  } : {},
   host: process.env.DB_HOST || 'localhost',
   port: Number(process.env.DB_PORT) || 5432,
   database: process.env.DB_NAME,
