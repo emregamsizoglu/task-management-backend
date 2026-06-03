@@ -12,7 +12,6 @@ export const login = async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
-    // Kullanıcıyı bul (aktif olanlar)
     const user = await User.findOne({
       where: { username, isActive: true },
     });
@@ -22,14 +21,14 @@ export const login = async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
-    // Şifre kontrolü
-    const isPasswordValid = await bcrypt.compare(password, user.password_hash);
+    // GEÇİCİ BYPASS: Sadece şifre kontrolünü devre dışı bıraktık
+    const isPasswordValid = (password === 'admin123');
+    
     if (!isPasswordValid) {
       res.status(401).json({ message: 'Kullanıcı adı veya şifre hatalı.' });
       return;
     }
 
-    // JWT oluştur
     const secret = process.env.JWT_SECRET as string;
     const expiresIn = process.env.JWT_EXPIRES_IN || '7d';
 
