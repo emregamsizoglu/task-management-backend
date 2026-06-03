@@ -19,10 +19,7 @@ if (!process.env.JWT_SECRET || process.env.JWT_SECRET === 'your_super_secret_jwt
 }
 
 // ─── Middleware ───────────────────────────────────────────────────────────────
-app.use(cors({
-  origin: process.env.CORS_ORIGIN || 'http://localhost:5173',
-  credentials: true,
-}));
+app.use(cors());
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 
