@@ -93,9 +93,12 @@ const start = async () => {
 
     await ensureSeedData();
 
-    app.listen(PORT, () => {
-      console.log(`🚀 Sunucu http://localhost:${PORT} adresinde çalışıyor.`);
+    const PORT = process.env.PORT || 5000;
+
+    app.listen(PORT as number, "0.0.0.0", () => {
+    console.log(`Sunucu ${PORT} portunda başarıyla çalışıyor!`);
     });
+
   } catch (error) {
     console.error('❌ Sunucu başlatılamadı:', error);
     process.exit(1);
